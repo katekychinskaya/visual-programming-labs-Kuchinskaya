@@ -1,4 +1,4 @@
-\# Sequence Diagram: Заказ еды с доставкой
+# Sequence Diagram: Заказ еды с доставкой
 
 
 
