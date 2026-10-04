@@ -1,0 +1,68 @@
+[
+    {
+        "id": "f6f1acb2163cb6cb",
+        "type": "function",
+        "z": "3c3794f0ec545db9",
+        "name": "Обработка числа",
+        "func": "// Получаем число из inject\nconst inputNumber = msg.payload;\n\n// Массив с числами для примера\nlet numbers = [1, 2, 3, 4, 5];\n\n// Объект с информацией\nconst info = {\n    student: \"Кучинская\",\n    lab: \"lab2\",\n    task: \"2.2 function\"\n};\n\n// Проверяем входное значение через if/else\nlet category;\nif (inputNumber > 3) {\n    category = \"большое\";\n} else {\n    category = \"маленькое\";\n}\n\n// Считаем сумму чисел в массиве через цикл for\nlet sum = 0;\nfor (let i = 0; i < numbers.length; i++) {\n    sum = sum + numbers[i];\n}\n\n// Возвращаем объект с полем payload\nmsg.payload = {\n    input: inputNumber,\n    category: category,\n    arraySum: sum,\n    arrayLength: numbers.length,\n    info: info\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "b0416b5d5e0951f1"
+            ]
+        ]
+    },
+    {
+        "id": "ace6ef6414a87234",
+        "type": "inject",
+        "z": "3c3794f0ec545db9",
+        "name": "Число 5",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "5",
+        "payloadType": "num",
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "f6f1acb2163cb6cb"
+            ]
+        ]
+    },
+    {
+        "id": "b0416b5d5e0951f1",
+        "type": "debug",
+        "z": "3c3794f0ec545db9",
+        "name": "Результат функции",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 240,
+        "wires": []
+    }
+]
