@@ -1,0 +1,48 @@
+[
+    {
+        "id": "22a46af7b48dba68",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Полное сообщение",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "741f35a215ca0831",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "Фамилия каждые 5 сек",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "lab2/Kuchinskaya/basic",
+        "payload": "Кучинская",
+        "payloadType": "str",
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "22a46af7b48dba68"
+            ]
+        ]
+    }
+]
