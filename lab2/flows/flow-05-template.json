@@ -1,0 +1,67 @@
+[
+    {
+        "id": "94c1c2bb86c78490",
+        "type": "debug",
+        "z": "1a8ea316ce3cfca4",
+        "name": "Результат шаблона",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b2db22445925c3ed",
+        "type": "template",
+        "z": "1a8ea316ce3cfca4",
+        "name": "Шаблон клиента",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"студент\": \"{{payload.name}}\",\n    \"возраст\": \"{{payload.age}}\",\n    \"город\": \"{{payload.city}}\",\n    \"лаборатория\": \"lab2\",\n    \"задание\": \"2.5 template\",\n    \"сообщение\": \"Привет, {{payload.name}} из {{payload.city}}!\"\n}",
+        "output": "json",
+        "x": 330,
+        "y": 220,
+        "wires": [
+            [
+                "94c1c2bb86c78490"
+            ]
+        ]
+    },
+    {
+        "id": "4309783b22aef2d2",
+        "type": "inject",
+        "z": "1a8ea316ce3cfca4",
+        "name": "Объект клиента",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"name\": \"Кучинская\", \"age\": 20, \"city\": \"Гродно\"}",
+        "payloadType": "json",
+        "x": 120,
+        "y": 220,
+        "wires": [
+            [
+                "b2db22445925c3ed"
+            ]
+        ]
+    }
+]
