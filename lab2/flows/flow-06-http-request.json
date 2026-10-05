@@ -1,0 +1,72 @@
+[
+    {
+        "id": "9c83ad01340ecb08",
+        "type": "debug",
+        "z": "a5ad491ddbc08167",
+        "name": "Ответ API",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ab945a562fb5c9cb",
+        "type": "http request",
+        "z": "a5ad491ddbc08167",
+        "name": "Шутка про Чака",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.chucknorris.io/jokes/random",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "9c83ad01340ecb08"
+            ]
+        ]
+    },
+    {
+        "id": "6899a7933bc15662",
+        "type": "inject",
+        "z": "a5ad491ddbc08167",
+        "name": "Запустить запрос",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "ab945a562fb5c9cb"
+            ]
+        ]
+    }
+]
