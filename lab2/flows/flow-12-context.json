@@ -1,0 +1,68 @@
+[
+    {
+        "id": "b9b47f9a64589c64",
+        "type": "debug",
+        "z": "c2694e137ea3e59a",
+        "name": "Значение счётчика",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "96fc6a210b3d03b1",
+        "type": "function",
+        "z": "c2694e137ea3e59a",
+        "name": "Счётчик",
+        "func": "// Читаем текущее значение из flow context\n// Если ничего нет — начинаем с 0\nlet counter = flow.get(\"counter\") || 0;\n\n// Увеличиваем на 1\ncounter = counter + 1;\n\n// Сохраняем обратно в flow context\nflow.set(\"counter\", counter);\n\n// Формируем ответ\nmsg.payload = {\n    counter: counter,\n    message: \"Счётчик увеличен. Всего нажатий: \" + counter,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "b9b47f9a64589c64"
+            ]
+        ]
+    },
+    {
+        "id": "4b63490ca0e9acd7",
+        "type": "inject",
+        "z": "c2694e137ea3e59a",
+        "name": "Увеличить счётчик",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "96fc6a210b3d03b1"
+            ]
+        ]
+    }
+]
