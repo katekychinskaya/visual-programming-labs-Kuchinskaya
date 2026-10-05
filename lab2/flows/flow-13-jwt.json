@@ -1,0 +1,117 @@
+[
+    {
+        "id": "a8031f8d4b9ebb4e",
+        "type": "function",
+        "z": "959d4ebb08e75641",
+        "name": "Генерация JWT",
+        "func": "const SECRET = \"kuchinskaya_secret_key_2026\";\nconst VALID_USER = \"student\";\nconst VALID_PASS = \"lab2secret\";\nconst EXPIRES_IN = 3600;\n\nfunction base64url(str) {\n    return Buffer.from(str).toString(\"base64\")\n        .replace(/=/g, \"\").replace(/\\+/g, \"-\").replace(/\\//g, \"_\");\n}\n\nfunction simpleSign(data, secret) {\n    const combined = data + \".\" + secret;\n    return base64url(combined.split(\"\").reverse().join(\"\"));\n}\n\nfunction createJWT(payload, secret, expiresIn) {\n    const header = { alg: \"HS256\", typ: \"JWT\" };\n    const now = Math.floor(Date.now() / 1000);\n    const fullPayload = Object.assign({}, payload, { iat: now, exp: now + expiresIn });\n    const headerB64 = base64url(JSON.stringify(header));\n    const payloadB64 = base64url(JSON.stringify(fullPayload));\n    const signature = simpleSign(headerB64 + \".\" + payloadB64, secret);\n    return headerB64 + \".\" + payloadB64 + \".\" + signature;\n}\n\nconst body = msg.payload || {};\n\nif (body.username === VALID_USER && body.password === VALID_PASS) {\n    const token = createJWT({ username: body.username }, SECRET, EXPIRES_IN);\n    msg.statusCode = 200;\n    msg.payload = {\n        success: true,\n        token: token,\n        expiresIn: EXPIRES_IN,\n        tokenType: \"Bearer\"\n    };\n} else {\n    msg.statusCode = 401;\n    msg.payload = { success: false, error: \"Неверный логин или пароль\" };\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 240,
+        "wires": [
+            [
+                "1b205f04e517aa87"
+            ]
+        ]
+    },
+    {
+        "id": "d8b29215d82fdcb7",
+        "type": "http in",
+        "z": "959d4ebb08e75641",
+        "name": "POST /login",
+        "url": "/login",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "a8031f8d4b9ebb4e"
+            ]
+        ]
+    },
+    {
+        "id": "1b205f04e517aa87",
+        "type": "http response",
+        "z": "959d4ebb08e75641",
+        "name": "Ответ /login",
+        "statusCode": "200",
+        "headers": {},
+        "x": 690,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "248e3c7644ed36e1",
+        "type": "http in",
+        "z": "959d4ebb08e75641",
+        "name": "GET /me",
+        "url": "/me",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 320,
+        "wires": [
+            [
+                "05c86a6e7e6f1804"
+            ]
+        ]
+    },
+    {
+        "id": "8760f28928ee54cb",
+        "type": "http response",
+        "z": "959d4ebb08e75641",
+        "name": "Ответ /me",
+        "statusCode": "200",
+        "headers": {},
+        "x": 490,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "05c86a6e7e6f1804",
+        "type": "function",
+        "z": "959d4ebb08e75641",
+        "name": "Проверка JWT",
+        "func": "const SECRET = \"kuchinskaya_secret_key_2026\";\n\nfunction base64urlDecode(str) {\n    str = str.replace(/-/g, \"+\").replace(/_/g, \"/\");\n    while (str.length % 4) str += \"=\";\n    return Buffer.from(str, \"base64\").toString(\"utf8\");\n}\n\nfunction base64url(str) {\n    return Buffer.from(str).toString(\"base64\")\n        .replace(/=/g, \"\").replace(/\\+/g, \"-\").replace(/\\//g, \"_\");\n}\n\nfunction simpleSign(data, secret) {\n    const combined = data + \".\" + secret;\n    return base64url(combined.split(\"\").reverse().join(\"\"));\n}\n\nconst authHeader = msg.req.headers[\"authorization\"] || \"\";\n\nif (!authHeader.startsWith(\"Bearer \")) {\n    msg.statusCode = 401;\n    msg.payload = { success: false, error: \"Нет токена. Заголовок: Authorization: Bearer <token>\" };\n    return msg;\n}\n\nconst token = authHeader.substring(7);\nconst parts = token.split(\".\");\n\nif (parts.length !== 3) {\n    msg.statusCode = 401;\n    msg.payload = { success: false, error: \"Неверный формат JWT\" };\n    return msg;\n}\n\nconst headerB64 = parts[0];\nconst payloadB64 = parts[1];\nconst signature = parts[2];\n\nconst expectedSig = simpleSign(headerB64 + \".\" + payloadB64, SECRET);\nif (expectedSig !== signature) {\n    msg.statusCode = 401;\n    msg.payload = { success: false, error: \"Неверная подпись токена\" };\n    return msg;\n}\n\nlet payload;\ntry {\n    payload = JSON.parse(base64urlDecode(payloadB64));\n} catch (e) {\n    msg.statusCode = 401;\n    msg.payload = { success: false, error: \"Не удалось декодировать payload\" };\n    return msg;\n}\n\nconst now = Math.floor(Date.now() / 1000);\nif (payload.exp < now) {\n    msg.statusCode = 401;\n    msg.payload = { success: false, error: \"Токен истёк\", expiredAt: payload.exp, now: now };\n    return msg;\n}\n\nmsg.statusCode = 200;\nmsg.payload = {\n    success: true,\n    user: {\n        username: payload.username,\n        issuedAt: payload.iat,\n        expiresAt: payload.exp\n    },\n    message: \"Доступ разрешён. JWT валиден.\"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 320,
+        "wires": [
+            [
+                "8760f28928ee54cb"
+            ]
+        ]
+    },
+    {
+        "id": "de951c914c3f15ec",
+        "type": "debug",
+        "z": "959d4ebb08e75641",
+        "name": "Вход /login",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 240,
+        "wires": []
+    }
+]
