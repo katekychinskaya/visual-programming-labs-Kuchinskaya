@@ -1,0 +1,147 @@
+[
+    {
+        "id": "88776495099b92c2",
+        "type": "http in",
+        "z": "d552902b2538b99e",
+        "name": "GET /api/text",
+        "url": "/api/text",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 330,
+        "y": 380,
+        "wires": [
+            [
+                "ee0fa731b344e7ef"
+            ]
+        ]
+    },
+    {
+        "id": "c2481feda332c8cb",
+        "type": "http response",
+        "z": "d552902b2538b99e",
+        "name": "Текстовый ответ",
+        "statusCode": "200",
+        "headers": {},
+        "x": 730,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ee0fa731b344e7ef",
+        "type": "template",
+        "z": "d552902b2538b99e",
+        "name": "Текст ответа",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "plain",
+        "template": "Привет! Это текстовый ответ от Node-RED. Студент: Кучинская.",
+        "output": "str",
+        "x": 530,
+        "y": 380,
+        "wires": [
+            [
+                "c2481feda332c8cb"
+            ]
+        ]
+    },
+    {
+        "id": "0cbc36995ffe05f9",
+        "type": "http in",
+        "z": "d552902b2538b99e",
+        "name": "GET /api/info",
+        "url": "/api/info",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 350,
+        "y": 500,
+        "wires": [
+            [
+                "be73b18f03b405d2"
+            ]
+        ]
+    },
+    {
+        "id": "889cb1938b5a72cf",
+        "type": "http response",
+        "z": "d552902b2538b99e",
+        "name": "JSON ответ HTTP",
+        "statusCode": "200",
+        "headers": {},
+        "x": 730,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "be73b18f03b405d2",
+        "type": "template",
+        "z": "d552902b2538b99e",
+        "name": "JSON ответ",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"student\": \"Кучинская\",\n    \"lab\": \"lab2\",\n    \"task\": \"2.8 endpoints\",\n    \"timestamp\": \"{{payload}}\"\n}",
+        "output": "json",
+        "x": 530,
+        "y": 500,
+        "wires": [
+            [
+                "889cb1938b5a72cf"
+            ]
+        ]
+    },
+    {
+        "id": "07855b8a7d032bcd",
+        "type": "function",
+        "z": "d552902b2538b99e",
+        "name": "Обработать id",
+        "func": "// Получаем id из path-параметра\nconst id = msg.req.params.id;\n\n// Проверяем: id должен быть числом 1, 2 или 3\nconst validItems = {\n    \"1\": { name: \"Пицца\", price: 15 },\n    \"2\": { name: \"Суши\", price: 25 },\n    \"3\": { name: \"Бургер\", price: 10 }\n};\n\nif (validItems[id]) {\n    // Успешный ответ\n    msg.statusCode = 200;\n    msg.payload = {\n        success: true,\n        item: validItems[id]\n    };\n} else {\n    // Товар не найден → 404\n    msg.statusCode = 404;\n    msg.payload = {\n        success: false,\n        error: \"Товар с id=\" + id + \" не найден\"\n    };\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 600,
+        "wires": [
+            [
+                "553476d1e01e80a3"
+            ]
+        ]
+    },
+    {
+        "id": "670cc27a688ef1cf",
+        "type": "http in",
+        "z": "d552902b2538b99e",
+        "name": "GET /api/items/:id",
+        "url": "/api/items/:id",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 350,
+        "y": 600,
+        "wires": [
+            [
+                "07855b8a7d032bcd"
+            ]
+        ]
+    },
+    {
+        "id": "553476d1e01e80a3",
+        "type": "http response",
+        "z": "d552902b2538b99e",
+        "name": "Ответ items",
+        "statusCode": "200",
+        "headers": {},
+        "x": 750,
+        "y": 600,
+        "wires": []
+    }
+]
