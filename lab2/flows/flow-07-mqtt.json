@@ -1,0 +1,138 @@
+[
+    {
+        "id": "654359242be2b860",
+        "type": "inject",
+        "z": "e76ba2f8350ebcfa",
+        "name": "Каждые 5 сек",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 300,
+        "wires": [
+            [
+                "19118d116160d722"
+            ]
+        ]
+    },
+    {
+        "id": "3530e73ea762350c",
+        "type": "debug",
+        "z": "e76ba2f8350ebcfa",
+        "name": "Получено из MQTT",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "8673691c3a0bf70a",
+        "type": "mqtt out",
+        "z": "e76ba2f8350ebcfa",
+        "name": "Отправить в MQTT",
+        "topic": "student/Kuchinskaya/lab2/test",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5cf080b6f5b33839",
+        "x": 600,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ae7adb438e3a06e9",
+        "type": "mqtt in",
+        "z": "e76ba2f8350ebcfa",
+        "name": "Получить из MQTT",
+        "topic": "student/Kuchinskaya/lab2/test",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "5cf080b6f5b33839",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 380,
+        "wires": [
+            [
+                "3530e73ea762350c"
+            ]
+        ]
+    },
+    {
+        "id": "19118d116160d722",
+        "type": "function",
+        "z": "e76ba2f8350ebcfa",
+        "name": "Случайное число",
+        "func": "// Генерируем случайное число от 0 до 100\nmsg.payload = Math.floor(Math.random() * 100);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 300,
+        "wires": [
+            [
+                "8673691c3a0bf70a"
+            ]
+        ]
+    },
+    {
+        "id": "5cf080b6f5b33839",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Public",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
