@@ -1,0 +1,151 @@
+[
+    {
+        "id": "5c8a80e12e2deecf",
+        "type": "ui_chart",
+        "z": "b0bd13dd51afb5ec",
+        "name": "История температуры",
+        "group": "d4a24c74f63678bb",
+        "order": 1,
+        "width": "10",
+        "height": "5",
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "10",
+        "ymax": "35",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 670,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4d3afea9c2bdb98c",
+        "type": "function",
+        "z": "b0bd13dd51afb5ec",
+        "name": "Генератор температуры",
+        "func": "// Имитация датчика температуры: 15-30°C\nmsg.payload = +(Math.random() * 15 + 15).toFixed(1);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 300,
+        "wires": [
+            [
+                "27f127a2ed9038c2",
+                "5c8a80e12e2deecf"
+            ]
+        ]
+    },
+    {
+        "id": "ef6ae7f1be13273f",
+        "type": "inject",
+        "z": "b0bd13dd51afb5ec",
+        "name": "Датчик температуры",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 300,
+        "wires": [
+            [
+                "4d3afea9c2bdb98c"
+            ]
+        ]
+    },
+    {
+        "id": "27f127a2ed9038c2",
+        "type": "ui_gauge",
+        "z": "b0bd13dd51afb5ec",
+        "name": "Температура",
+        "group": "d4a24c74f63678bb",
+        "order": 0,
+        "width": "5",
+        "height": "5",
+        "gtype": "gage",
+        "title": "Температура",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": "10",
+        "max": "35",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 640,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d4a24c74f63678bb",
+        "type": "ui_group",
+        "name": "Датчики",
+        "tab": "5a7e8f410da62fbd",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5a7e8f410da62fbd",
+        "type": "ui_tab",
+        "name": "Лабораторная 2.9",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "f14c61081b8ae59f",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
