@@ -1,0 +1,89 @@
+[
+    {
+        "id": "78c5e8b6b7688296",
+        "type": "debug",
+        "z": "ba93939f9c3cf5d5",
+        "name": "Полное сообщение",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4e087e15e01b1f8e",
+        "type": "change",
+        "z": "ba93939f9c3cf5d5",
+        "name": "Обогатить сообщение",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "lab2/Kuchinskaya/change",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Изменённое сообщение от Кучинской",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 320,
+        "wires": [
+            [
+                "78c5e8b6b7688296"
+            ]
+        ]
+    },
+    {
+        "id": "5d2f476905eb86ae",
+        "type": "inject",
+        "z": "ba93939f9c3cf5d5",
+        "name": "Стартовое сообщение",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Привет от Кучинской",
+        "payloadType": "str",
+        "x": 220,
+        "y": 320,
+        "wires": [
+            [
+                "4e087e15e01b1f8e"
+            ]
+        ]
+    }
+]
