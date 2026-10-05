@@ -1,0 +1,134 @@
+[
+    {
+        "id": "ab0aeef45e2c5613",
+        "type": "inject",
+        "z": "ca922d091964afae",
+        "name": "Записать данные",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "9e571173654eacd3"
+            ]
+        ]
+    },
+    {
+        "id": "a0c3417cf51eaa0b",
+        "type": "inject",
+        "z": "ca922d091964afae",
+        "name": "Прочитать данные",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "e38db3b8ca7ce65b"
+            ]
+        ]
+    },
+    {
+        "id": "9e571173654eacd3",
+        "type": "function",
+        "z": "ca922d091964afae",
+        "name": "Формирование JSON",
+        "func": "const data = {\n    student: \"Кучинская\",\n    lab: \"lab2\",\n    task: \"2.11 files\",\n    timestamp: new Date().toISOString(),\n    values: [10, 20, 30, 40, 50],\n    note: \"Данные записаны из Node-RED\"\n};\n\nmsg.payload = JSON.stringify(data, null, 2);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "9d89672ef21c81b5"
+            ]
+        ]
+    },
+    {
+        "id": "9d89672ef21c81b5",
+        "type": "file",
+        "z": "ca922d091964afae",
+        "name": "Записать в файл",
+        "filename": "/data/lab2-data.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 610,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e38db3b8ca7ce65b",
+        "type": "file in",
+        "z": "ca922d091964afae",
+        "name": "Прочитать из файла",
+        "filename": "/data/lab2-data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 380,
+        "y": 180,
+        "wires": [
+            [
+                "acbe2b9e3004128e"
+            ]
+        ]
+    },
+    {
+        "id": "acbe2b9e3004128e",
+        "type": "debug",
+        "z": "ca922d091964afae",
+        "name": "Содержимое файла",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 180,
+        "wires": []
+    }
+]
