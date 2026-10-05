@@ -1,0 +1,179 @@
+[
+    {
+        "id": "d1fb4532e7c6dc93",
+        "type": "telegram receiver",
+        "z": "441736a172b31e87",
+        "name": "Получение сообщений",
+        "bot": "9a853146df0a7466",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "hasinput": false,
+        "inputs": 0,
+        "handleallupdates": false,
+        "handleprocessupdates": false,
+        "x": 100,
+        "y": 280,
+        "wires": [
+            [],
+            [
+                "1a746d9160b81592"
+            ]
+        ]
+    },
+    {
+        "id": "74905dcc653fb562",
+        "type": "telegram command",
+        "z": "441736a172b31e87",
+        "name": "Команда /start",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "9a853146df0a7466",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 320,
+        "y": 280,
+        "wires": [
+            [
+                "229b1afb05bf63f2"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8bfd9ec1434d44bf",
+        "type": "telegram command",
+        "z": "441736a172b31e87",
+        "name": "Команда /echo",
+        "command": "/echo",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "9a853146df0a7466",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 320,
+        "y": 340,
+        "wires": [
+            [
+                "76b239711a1ba3a4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "75144a9edc10dc34",
+        "type": "telegram sender",
+        "z": "441736a172b31e87",
+        "name": "Отправка ответа",
+        "bot": "9a853146df0a7466",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 730,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "76b239711a1ba3a4",
+        "type": "function",
+        "z": "441736a172b31e87",
+        "name": "Эхо-ответ",
+        "func": "// Убираем \"/echo\" из текста и возвращаем остаток\nconst text = msg.payload.content || \"\";\nconst echo = text.replace(/\\/echo\\s*/i, \"\").trim();\n\nmsg.payload = {\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: echo ? \"Ты написал: \" + echo : \"Напиши что-нибудь после /echo, например: /echo Привет\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 340,
+        "wires": [
+            [
+                "75144a9edc10dc34"
+            ]
+        ]
+    },
+    {
+        "id": "229b1afb05bf63f2",
+        "type": "function",
+        "z": "441736a172b31e87",
+        "name": "Ответ /start",
+        "func": "msg.payload = {\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: \"Привет! Я бот студента Кучинской. Мои команды:\\n/start — это сообщение\\n/echo <текст> — повторить текст\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 280,
+        "wires": [
+            [
+                "75144a9edc10dc34"
+            ]
+        ]
+    },
+    {
+        "id": "1a746d9160b81592",
+        "type": "debug",
+        "z": "441736a172b31e87",
+        "name": "Входящие сообщения",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "9a853146df0a7466",
+        "type": "telegram bot",
+        "botname": "Lab2 Bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "bf1051e306637bf0",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-telegrambot": "19.0.3"
+        }
+    }
+]
