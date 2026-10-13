@@ -1,0 +1,101 @@
+{
+  "name": "Lab4 2.4 Set",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a45b79e5-42b6-41c3-aae6-bd79703b5a43",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8ab5cec0-f59e-4bb1-a7e4-63a482559fc5",
+              "name": "topic",
+              "value": "lab4/Kuchinskaya/set",
+              "type": "string"
+            },
+            {
+              "id": "c177f172-f1eb-4af6-9dd9-c8c2bbaeff10",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "c72447dc-7d18-4f8b-a0e6-1e0d2f78b136",
+              "name": "payload",
+              "value": "Кучинская, lab4 2.4",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "de95f28a-cd01-4143-82d3-034ace798836",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Показываем весь объект msg\nconst item = $input.first().json;\n\nconsole.log(\"=== Complete msg object ===\");\nconsole.log(JSON.stringify(item, null, 2));\n\n// Возвращаем объект с добавленным полем receivedAt\nreturn {\n    payload: {\n        topic: item.topic,\n        timestamp: item.timestamp,\n        payload: item.payload,\n        receivedAt: new Date().toISOString(),\n        note: \"Полный объект msg обработан\"\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "2b21459c-1747-427b-9f52-407e52d7f513",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ee482317-e82f-4206-9c48-64e9295153f4",
+  "meta": {
+    "instanceId": "59dbcd74459cac6e3b9a0c35fdac42c3c5de4468b6eb73a8aeafb91eca08667f"
+  },
+  "nodeGroups": [],
+  "id": "bltH5svwoWe3YrUr",
+  "tags": []
+}
