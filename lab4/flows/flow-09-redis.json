@@ -1,0 +1,96 @@
+{
+  "name": "Lab4 Redis Set-Get",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5c512ef5-8cb8-4be2-992f-0dc4db74cf9f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "kuchinskaya",
+        "value": "Привет из n8n, lab4!"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "51e3c70a-4d84-4345-a814-6815d10ef05b",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "DwbsWOF4FGU2CKOe",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "key": "kuchinskaya",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "9aa1a95c-072c-4fb5-834a-acecb707ee8c",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "DwbsWOF4FGU2CKOe",
+          "name": "Redis account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "833d34aa-a5aa-4ca5-9832-7c9370d5e4c2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "59dbcd74459cac6e3b9a0c35fdac42c3c5de4468b6eb73a8aeafb91eca08667f"
+  },
+  "nodeGroups": [],
+  "id": "1dps04CTKKAgN7J6",
+  "tags": []
+}
