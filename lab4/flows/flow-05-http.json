@@ -1,0 +1,80 @@
+{
+  "name": "Lab4 2.5 HTTP",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0baa0abb-4302-4abc-bfc3-93f4894f7057",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://api.chucknorris.io/jokes/random",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "12fef406-6ce4-492b-a92e-755a3d922c88",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем ответ от HTTP Request\nconst joke = $input.first().json;\n\nconsole.log(\"Шутка от API:\", joke.value);\n\n// Возвращаем объект\nreturn {\n    payload: {\n        student: \"Кучинская\",\n        lab: \"lab4\",\n        task: \"2.5 HTTP Request\",\n        api: \"chucknorris.io\",\n        joke: joke.value,\n        jokeId: joke.id,\n        iconUrl: joke.icon_url,\n        timestamp: new Date().toISOString()\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "153b975e-c264-4992-a6db-7b9d59060434",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b254673c-6740-470c-a035-cf46b237fe7e",
+  "meta": {
+    "instanceId": "59dbcd74459cac6e3b9a0c35fdac42c3c5de4468b6eb73a8aeafb91eca08667f"
+  },
+  "nodeGroups": [],
+  "id": "e3CS9Xc1DOYhng5k",
+  "tags": []
+}
