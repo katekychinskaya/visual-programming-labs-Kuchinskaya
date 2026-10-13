@@ -1,0 +1,139 @@
+{
+  "name": "Lab4 2.3 IF",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "bfa6ccb3-7443-42c2-abff-723b9488fc5b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Массив с числами\nconst numbers = [1, 2, 3, 4, 5];\n\n// Объект с информацией\nconst info = {\n    student: \"Кучинская\",\n    lab: \"lab4\",\n    task: \"2.3 IF\"\n};\n\n// Переменная для суммы\nlet sum = 0;\n\n// Цикл for — считаем сумму массива\nfor (let i = 0; i < numbers.length; i++) {\n    sum = sum + numbers[i];\n}\n\n// if/else — определяем категорию\nlet category;\nif (sum > 10) {\n    category = \"большая сумма\";\n} else {\n    category = \"маленькая сумма\";\n}\n\n// Возвращаем объект с полем payload\nreturn {\n    payload: {\n        sum: sum,\n        category: category,\n        arrayLength: numbers.length,\n        info: info,\n        timestamp: new Date().toISOString()\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "73029d66-0fa6-4291-ae61-7e4948b20855",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7c7f7052-9323-4447-9a81-ab039320d38c",
+              "leftValue": "={{ $json.payload.sum }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "95665a9c-8f94-468e-837c-157c63f975ab",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        672,
+        -75
+      ],
+      "id": "6d072477-de34-4579-9312-9147f7becbfc",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        672,
+        96
+      ],
+      "id": "07d9ee55-0edd-4ccd-947e-20487b147ee3",
+      "name": "No Operation, do nothing1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "a78004f0-59a8-4491-84fc-d26d45a1eeb3",
+  "meta": {
+    "instanceId": "59dbcd74459cac6e3b9a0c35fdac42c3c5de4468b6eb73a8aeafb91eca08667f"
+  },
+  "nodeGroups": [],
+  "id": "wauQ6AFDSlYMePSO",
+  "tags": []
+}
