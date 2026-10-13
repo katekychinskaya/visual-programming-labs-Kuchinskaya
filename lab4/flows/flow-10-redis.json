@@ -1,0 +1,95 @@
+{
+  "name": "Lab4 Redis Delete",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "983bc1f9-28e7-4ba7-9442-0e503e94e46b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "kuchinskaya"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "edc649b4-82ef-4ae7-af94-1b1a09dd2c4c",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "DwbsWOF4FGU2CKOe",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "key": "kuchinskaya",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "95816fcb-0d2c-462e-b791-ddb59fe53b36",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "DwbsWOF4FGU2CKOe",
+          "name": "Redis account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4ad6b3fe-f106-45fe-8b41-18564d7523a6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "59dbcd74459cac6e3b9a0c35fdac42c3c5de4468b6eb73a8aeafb91eca08667f"
+  },
+  "nodeGroups": [],
+  "id": "UQAVHaIUu8Y3JExx",
+  "tags": []
+}
