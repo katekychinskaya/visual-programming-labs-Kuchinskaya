@@ -1,0 +1,63 @@
+{
+  "name": "Lab4 2.6 Schedule",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "01d8cd01-4dbb-40ac-beec-eb20266c8ecd",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Возвращаем текущее время\nconst now = new Date();\n\nreturn {\n    payload: {\n        student: \"Кучинская\",\n        lab: \"lab4\",\n        task: \"2.6 Schedule Trigger\",\n        schedule: \"каждые 5 минут\",\n        currentTime: now.toISOString(),\n        localTime: now.toLocaleString(\"ru-RU\"),\n        unixTimestamp: now.getTime(),\n        message: \"Workflow запущен по расписанию\"\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d75849c8-18d0-4c03-8a0e-31905e84a766",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9a05a1ad-07c1-4a07-b17c-4ae9432557db",
+  "meta": {
+    "instanceId": "59dbcd74459cac6e3b9a0c35fdac42c3c5de4468b6eb73a8aeafb91eca08667f"
+  },
+  "nodeGroups": [],
+  "id": "Uxe1dC4rIgh6QDbA",
+  "tags": []
+}
