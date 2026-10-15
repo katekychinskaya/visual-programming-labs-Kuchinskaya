@@ -22,7 +22,7 @@ docker run -d --name redis -p 6379:6379 redis:7
 - **Database:** `0`
 - **Password:** (пусто)
 
-⚠️ **Важно:** `host.docker.internal` — это специальный адрес, по которому контейнер n8n видит **хост-машину** (Windows) и, соответственно, Redis.
+`host.docker.internal` — это специальный адрес, по которому контейнер n8n видит **хост-машину** (Windows) и, соответственно, Redis.
 
 ## Workflow A: Set + Get
 
