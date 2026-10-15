@@ -1,0 +1,64 @@
+{
+  "name": "Lab4 Redis Publish",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2ba431c3-3bbd-4a8b-b5ab-959b49077491",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "publish",
+        "channel": "lab4/channel",
+        "messageData": "Привет из Publisher! Кучинская, lab4"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "0c990e7a-9cbd-4051-baed-f34990523d9b",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "DwbsWOF4FGU2CKOe",
+          "name": "Redis account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3e257beb-36a3-412b-94b5-e235a4ffcc20",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "59dbcd74459cac6e3b9a0c35fdac42c3c5de4468b6eb73a8aeafb91eca08667f"
+  },
+  "nodeGroups": [],
+  "id": "IPI9ehyLg3iW1LTf",
+  "tags": []
+}

@@ -1,0 +1,63 @@
+{
+  "name": "Lab4 Redis Subscribe",
+  "nodes": [
+    {
+      "parameters": {
+        "channels": "lab4/channel",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redisTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c2cfa775-0ea7-4a75-a0da-ba862f1e9707",
+      "name": "Redis Subscribe",
+      "credentials": {
+        "redis": {
+          "id": "DwbsWOF4FGU2CKOe",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "18ffe85a-bc35-4502-87d9-37ad0975bc15",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Redis Subscribe": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "de196e74-4afb-4592-9488-2d43275d77fb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "59dbcd74459cac6e3b9a0c35fdac42c3c5de4468b6eb73a8aeafb91eca08667f"
+  },
+  "nodeGroups": [],
+  "id": "VsZxXrtiEqUX83zJ",
+  "tags": []
+}
